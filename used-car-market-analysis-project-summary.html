@@ -1,0 +1,194 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Used Car Market Analysis and Price Prediction in India</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "Segoe UI", system-ui, sans-serif; font-size: 14px;
+         line-height: 1.6; color: #1f2328; background: #fff; padding: 32px 16px; }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  h1 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+  .subtitle { color: #57606a; font-size: 13px; margin-bottom: 28px; }
+  h2 { font-size: 15px; font-weight: 700; margin: 28px 0 10px; border-bottom: 1px solid #e5e7eb; padding-bottom: 4px; }
+  h3 { font-size: 13px; font-weight: 600; margin: 14px 0 6px; color: #3b82d4; }
+  p { margin-bottom: 8px; }
+  ul { padding-left: 18px; margin-bottom: 8px; }
+  li { margin-bottom: 3px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .card { background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 6px; padding: 14px; }
+  .card .label { font-size: 11px; color: #57606a; text-transform: uppercase; letter-spacing: 0.5px; }
+  .card .value { font-size: 22px; font-weight: 700; color: #3b82d4; }
+  .card .sub { font-size: 12px; color: #57606a; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+  th { background: #f7f8fa; text-align: left; padding: 7px 10px; border: 1px solid #e5e7eb; font-weight: 600; }
+  td { padding: 6px 10px; border: 1px solid #e5e7eb; }
+  tr:nth-child(even) td { background: #f7f8fa; }
+  .best td { background: #eaf3fd !important; font-weight: 600; }
+  .tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 12px; margin: 2px; }
+  .tag-green { background: #d1fadf; color: #166534; }
+  .tag-red { background: #fee2e2; color: #991b1b; }
+  .tag-blue { background: #dbeafe; color: #1e40af; }
+  .tag-gray { background: #f3f4f6; color: #374151; }
+  .bar-wrap { margin: 4px 0 10px; }
+  .bar-row { display: flex; align-items: center; margin-bottom: 5px; font-size: 12px; }
+  .bar-label { width: 140px; flex-shrink: 0; }
+  .bar-bg { flex: 1; height: 14px; background: #e5e7eb; border-radius: 3px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 3px; background: #3b82d4; }
+  .bar-val { width: 55px; text-align: right; flex-shrink: 0; color: #57606a; }
+  .section-plots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 10px 0; }
+  .plot-chip { background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 5px;
+               padding: 6px 8px; font-size: 11px; color: #57606a; text-align: center; }
+  footer { margin-top: 40px; padding-top: 14px; border-top: 1px solid #e5e7eb;
+           text-align: center; font-size: 12px; color: #57606a; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Used Car Market Analysis and Price Prediction in India</h1>
+  <p class="subtitle">IBM x Bharat Cares Data Analysis Internship Project  |  Dataset: Used_Car_Price_Prediction.csv</p>
+
+  
+  <h2>Dataset Overview</h2>
+  <div class="grid2">
+    <div class="card"><div class="label">Total Listings</div><div class="value">7,396</div><div class="sub">after cleaning (3 zero-price + 1 duplicate removed)</div></div>
+    <div class="card"><div class="label">Original Columns</div><div class="value">29</div><div class="sub">16 used as ML features after leakage removal</div></div>
+    <div class="card"><div class="label">Target Variable</div><div class="value">sale_price</div><div class="sub">Listing price in INR (Rs. 0 – Rs. 38.66 Lakhs)</div></div>
+    <div class="card"><div class="label">Cities Covered</div><div class="value">13</div><div class="sub">Major Indian metros; data period 2019 – 2021</div></div>
+  </div>
+
+  
+  <h2>Project Sections &amp; Output Plots</h2>
+  <div class="section-plots">
+    <div class="plot-chip">plot_01<br />Sale Price Dist.</div>
+    <div class="plot-chip">plot_02<br />Year of Manufacture</div>
+    <div class="plot-chip">plot_03<br />Kms Driven Dist.</div>
+    <div class="plot-chip">plot_04<br />Categorical Freqs</div>
+    <div class="plot-chip">plot_05<br />Price vs Year</div>
+    <div class="plot-chip">plot_06<br />Price vs Kms</div>
+    <div class="plot-chip">plot_07<br />Price by Make</div>
+    <div class="plot-chip">plot_08<br />Price by Fuel</div>
+    <div class="plot-chip">plot_09<br />Price by Transmission</div>
+    <div class="plot-chip">plot_10<br />Price by Owners</div>
+    <div class="plot-chip">plot_11<br />Price by City</div>
+    <div class="plot-chip">plot_12<br />Price by Rating</div>
+    <div class="plot-chip">plot_13<br />Correlation Heatmap</div>
+    <div class="plot-chip">plot_14<br />Model Comparison</div>
+    <div class="plot-chip">plot_15<br />Actual vs Predicted</div>
+    <div class="plot-chip">plot_16<br />Feature Importance</div>
+  </div>
+
+  
+  <h2>Data Cleaning Decisions</h2>
+  <ul>
+    <li><strong>1 duplicate row</strong> removed to avoid model bias.</li>
+    <li><strong>3 zero-price listings</strong> removed as data-entry errors.</li>
+    <li><strong>Low-missingness categoricals</strong> (body_type, transmission, source, etc.) imputed with mode — rate &lt;10%, distribution preserved.</li>
+    <li><strong>original_price</strong> (44% missing) retained only for EDA; excluded from ML.</li>
+    <li><strong>kms_run</strong> capped at 99th percentile to remove extreme outliers.</li>
+  </ul>
+
+  
+  <h2>Leakage Columns Excluded from ML</h2>
+  <p>
+    <span class="tag tag-red">broker_quote (r=0.96)</span>
+    <span class="tag tag-red">emi_starts_from (r=1.0)</span>
+    <span class="tag tag-red">booking_down_pymnt (r=1.0)</span>
+    <span class="tag tag-red">original_price (44% missing)</span>
+    <span class="tag tag-red">times_viewed (post-listing)</span>
+    <span class="tag tag-red">is_hot (post-listing)</span>
+    <span class="tag tag-red">reserved (post-listing)</span>
+    <span class="tag tag-gray">car_name (high cardinality)</span>
+    <span class="tag tag-gray">variant (943 unique)</span>
+    <span class="tag tag-gray">rto (261 unique)</span>
+    <span class="tag tag-gray">registered_city (redundant)</span>
+    <span class="tag tag-gray">model (redundant)</span>
+  </p>
+
+  
+  <h2>Key Market Insights</h2>
+
+  <h3>Manufacturer Market Share (Top 5)</h3>
+  <div class="bar-wrap">
+    <div class="bar-row"><span class="bar-label">Maruti</span><div class="bar-bg"><div class="bar-fill" style="width:43%"></div></div><span class="bar-val">43.0%</span></div>
+    <div class="bar-row"><span class="bar-label">Hyundai</span><div class="bar-bg"><div class="bar-fill" style="width:24%"></div></div><span class="bar-val">24.3%</span></div>
+    <div class="bar-row"><span class="bar-label">Honda</span><div class="bar-bg"><div class="bar-fill" style="width:8%"></div></div><span class="bar-val">8.0%</span></div>
+    <div class="bar-row"><span class="bar-label">Toyota</span><div class="bar-bg"><div class="bar-fill" style="width:5%"></div></div><span class="bar-val">4.9%</span></div>
+    <div class="bar-row"><span class="bar-label">Renault</span><div class="bar-bg"><div class="bar-fill" style="width:3.5%"></div></div><span class="bar-val">3.5%</span></div>
+  </div>
+
+  <h3>Selected Findings</h3>
+  <ul>
+    <li>Automatic cars average <strong>Rs. 7.09 Lakhs</strong> vs. manual cars at <strong>Rs. 4.08 Lakhs</strong> — a 74% premium.</li>
+    <li>Median price drops from Rs. 5.83 L (1-year-old) to Rs. 0.73 L (15-year-old), illustrating rapid depreciation.</li>
+    <li>First-owner cars (Rs. 4.03 L median) command significantly more than second-owner (Rs. 3.44 L) or third-owner (Rs. 2.77 L).</li>
+    <li>Diesel cars have higher median prices than petrol, driven by SUV and sedan representation.</li>
+    <li>Chennai has the highest median used-car price (Rs. 4.51 L); Kolkata the lowest (Rs. 3.10 L).</li>
+    <li>"Great"-rated cars (Rs. 4.09 L median) dramatically outprice "overpriced"-rated ones (Rs. 1.63 L).</li>
+    <li>Correlation: year of manufacture (+0.44), kms_run (-0.34), total_owners (-0.22) — all in expected directions.</li>
+  </ul>
+
+  
+  <h2>Feature Engineering</h2>
+  <ul>
+    <li><strong>car_age</strong> = 2021 - yr_mfr  (reference year matches peak listing year)</li>
+    <li><strong>kms_per_year</strong> = kms_run / car_age  (normalised mileage; avoids age confounding)</li>
+  </ul>
+
+  
+  <h2>Model Evaluation on Test Set (20% hold-out, n=1,480)</h2>
+  <table>
+    <thead><tr><th>Model</th><th>MAE (Rs.)</th><th>RMSE (Rs.)</th><th>R²</th></tr></thead>
+    <tbody>
+      <tr><td>Linear Regression</td><td>1,27,513</td><td>2,17,728</td><td>0.4502</td></tr>
+      <tr><td>Decision Tree</td><td>82,402</td><td>1,43,647</td><td>0.7607</td></tr>
+      <tr><td>Random Forest</td><td>69,486</td><td>1,13,970</td><td>0.8494</td></tr>
+      <tr class="best"><td>Gradient Boosting ★ BEST</td><td>69,210</td><td>1,12,080</td><td>0.8543</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Gradient Boosting</strong> achieved the lowest MAE (Rs. 69,210) and RMSE (Rs. 1,12,080) with R² = 0.8543,
+  explaining 85% of price variance on unseen data.</p>
+
+  
+  <h2>Top Feature Importances (Gradient Boosting)</h2>
+  <div class="bar-wrap">
+    <div class="bar-row"><span class="bar-label">body_type</span><div class="bar-bg"><div class="bar-fill" style="width:73.6%"></div></div><span class="bar-val">0.368</span></div>
+    <div class="bar-row"><span class="bar-label">car_age</span><div class="bar-bg"><div class="bar-fill" style="width:56.4%"></div></div><span class="bar-val">0.282</span></div>
+    <div class="bar-row"><span class="bar-label">make</span><div class="bar-bg"><div class="bar-fill" style="width:30%"></div></div><span class="bar-val">0.150</span></div>
+    <div class="bar-row"><span class="bar-label">fuel_type</span><div class="bar-bg"><div class="bar-fill" style="width:10.9%"></div></div><span class="bar-val">0.054</span></div>
+    <div class="bar-row"><span class="bar-label">kms_run</span><div class="bar-bg"><div class="bar-fill" style="width:7.4%"></div></div><span class="bar-val">0.037</span></div>
+  </div>
+  <p style="font-size:12px;color:#57606a">Importance = predictive contribution within the model. Does not imply causation.</p>
+
+  
+  <h2>Limitations &amp; Future Work</h2>
+  <div class="grid2">
+    <div>
+      <h3>Limitations</h3>
+      <ul>
+        <li>7,400 listings; larger data would improve generalisation</li>
+        <li>Single-platform source; may not represent the full market</li>
+        <li>Listing prices, not final transaction prices</li>
+        <li>Luxury brands under-represented (&lt;1% each)</li>
+        <li>Data from 2019–2021; market has evolved since</li>
+        <li>Only 13 cities; no rural or tier-2/3 coverage</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Future Improvements</h3>
+      <ul>
+        <li>Larger, more recent datasets (2022–2024)</li>
+        <li>Engine displacement, mileage (km/L), safety ratings</li>
+        <li>Hyperparameter tuning via GridSearchCV</li>
+        <li>XGBoost, LightGBM, or CatBoost models</li>
+        <li>Macroeconomic indicators (fuel price, interest rates)</li>
+        <li>Flask / Streamlit web deployment</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>Made with IBM Bob</footer>
+</div>
+</body>
+</html>
